@@ -2,7 +2,7 @@
 
 status="0"
 OUTPUT_FREQ=434.0
-FILENAME=play.wav
+FILENAME=
 LAST_ITEM="0 Tune"
 do_freq_setup()
 {
@@ -16,7 +16,7 @@ do_freq_setup()
 do_set_input_filename()
 {
 
-	if NAME=$(whiptail --inputbox "Choose Output Fileanme" 8 78 $FILENAME --title "Audio For TX" 3>&1 1>&2 2>&3); then
+	if NAME=$(whiptail --inputbox "Choose Output Filename" 8 78 $FILENAME --title "Audio For TX" 3>&1 1>&2 2>&3); then
 	    FILENAME=$NAME
 	fi
 
