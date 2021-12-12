@@ -2,13 +2,23 @@
 
 status="0"
 OUTPUT_FREQ=434.0
+FILENAME=play.wav
 LAST_ITEM="0 Tune"
 do_freq_setup()
 {
 
-if FREQ=$(whiptail --inputbox "Choose output Frequency (in MHz) Default is 434 MHz" 8 78 $OUTPUT_FREQ --title "Rpitx transmit Frequency" 3>&1 1>&2 2>&3); then
-    OUTPUT_FREQ=$FREQ
-fi
+	if FREQ=$(whiptail --inputbox "Choose output Frequency (in MHz) Default is 434 MHz" 8 78 $OUTPUT_FREQ --title "Rpitx transmit Frequency" 3>&1 1>&2 2>&3); then
+	    OUTPUT_FREQ=$FREQ
+	fi
+
+}
+
+do_set_input_filename()
+{
+
+	if NAME=$(whiptail --inputbox "Choose Output Fileanme" 8 78 $FILENAME --title "Audio For TX" 3>&1 1>&2 2>&3); then
+	    FILENAME=$NAME
+	fi
 
 }
 
@@ -48,10 +58,12 @@ do_stop_transmit()
 
 do_status()
 {
-	 LAST_ITEM="$menuchoice"
+	LAST_ITEM="$menuchoice"
 	whiptail --title "Transmit ""$LAST_ITEM"" on ""$OUTPUT_FREQ"" MHz" --msgbox "Transmitting" 8 78
 	do_stop_transmit
 }
+
+do_set_input_filename
 
 
 do_freq_setup
@@ -91,7 +103,7 @@ do_freq_setup
 			do_status;;
 			4\ *) "./testfmrds.sh" "$OUTPUT_FREQ" >/dev/null 2>/dev/null &
 			do_status;;
-			5\ *) "./testnfm.sh" "$OUTPUT_FREQ""e3" >/dev/null 2>/dev/null &
+			5\ *) "./testnfm.sh" "$OUTPUT_FREQ""e3" "$FILENAME" >/dev/null 2>/dev/null &
 			do_status;;
 			6\ *) "./testssb.sh" "$OUTPUT_FREQ""e6" >/dev/null 2>/dev/null &
 			do_status;;
